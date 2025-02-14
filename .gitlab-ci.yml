@@ -91,7 +91,7 @@ default:
         - export PKG_CONFIG_PATH=${CORE_INSTALL_PREFIX}/lib/pkgconfig:$(pkg-config --variable pc_path pkg-config)
         - git clone https://github.com/flux-framework/flux-sched
         - cd flux-sched
-        - module load gcc 
+        - module load gcc/12 
         - ${CORE_INSTALL_PREFIX}/bin/flux ./configure
         - make -j $(nproc)
         - make -j $(nproc) install
