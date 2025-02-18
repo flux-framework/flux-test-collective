@@ -21,12 +21,12 @@
         - poodle
         - batch
     variables:
-        LLNL_SLURM_SCHEDULER_PARAMETERS: "--exclusive -N 1 -p pdebug"
+        LLNL_SLURM_SCHEDULER_PARAMETERS: "--exclusive -A lc -N 1 -p pdebug"
 
 .tioga:
     tags:
         - tioga
         - batch
     variables:
-        LLNL_FLUX_SCHEDULER_PARAMETERS: "--exclusive -N 1 -q pci"
+        LLNL_FLUX_SCHEDULER_PARAMETERS: "--exclusive -N 1 -q pci --setattr=bank=lc"
 
