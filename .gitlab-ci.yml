@@ -29,6 +29,23 @@ default:
         # Note: the above will not work with /usr/workspace, you must specify WS1 or WS2
 
 ## Job Specifications
+.test-core-poodle:
+    extends: .lc-variables
+    variables:
+        PYTHON: "/usr/bin/python3"
+        debug: t
+        FLUX_TESTS_LOGFILE: t
+    script:
+        - echo $CI_DIRECTORY
+        - cd ${CORE_BUILD_DIR}
+        - lstopo --of xml >$(hostname).xml
+        - export FLUX_HWLOC_XMLFILE=$(pwd)/$(hostname).xml
+        - make check
+        ## The following is teardown to make sure the xml file doesn't get reused
+        ## but maybe it's unnecessary. Subsequent tests will run under new shells...
+        - rm ${FLUX_HWLOC_XMLFILE}
+        - unset FLUX_HWLOC_XMLFILE
+
 .test-core:
     extends: .lc-variables
     variables:
@@ -136,7 +153,7 @@ poodle-core-build:
 poodle-core-test:
     needs: ["poodle-core-build"]
     extends: 
-        - .test-core
+        - .test-core-poodle
         - .poodle
     stage: test
 
